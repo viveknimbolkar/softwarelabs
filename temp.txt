@@ -1,0 +1,4 @@
+  "main": "app/auth/reset-password.tsx",
+
+
+  "main": "expo-router/entry",
