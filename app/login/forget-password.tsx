@@ -26,7 +26,7 @@ function ForgetPassword() {
         <Text style={styles.heading}>Forgot password?</Text>
         <View style={styles.createWrapper}>
           <Text>Remember your password? </Text>
-          <Link href="/auth/" replace>
+          <Link href="/login/" replace>
             <Pressable>
               <Text style={{ color: "#D5715B" }}>Login</Text>
             </Pressable>

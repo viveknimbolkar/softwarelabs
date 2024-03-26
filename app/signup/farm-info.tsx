@@ -3,6 +3,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { registerRootComponent } from "expo";
 import { Link, router } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
+import RNPickerSelect from "react-native-picker-select";
+import { EvilIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   Pressable,
@@ -14,72 +16,78 @@ import {
   Dimensions,
 } from "react-native";
 
-function index() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+function FarmInfo() {
+  const [busienssName, setBusinessName] = useState("");
+  const [informalName, setInformalName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
 
+  const states = [
+    { label: "Andhra Pradesh", value: "Andhra Pradesh" },
+    { label: "Arunachal Pradesh", value: "Arunachal Pradesh" },
+    { label: "Assam", value: "Assam" },
+    { label: "Bihar", value: "Bihar" },
+    { label: "Chhattisgarh", value: "Chhattisgarh" },
+    { label: "Goa", value: "Goa" },
+    { label: "Gujarat", value: "Gujarat" },
+    { label: "Haryana", value: "Haryana" },
+    { label: "Himachal Pradesh", value: "Himachal Pradesh" },
+    { label: "Jharkhand", value: "Jharkhand" },
+    { label: "Karnataka", value: "Karnataka" },
+    { label: "Kerala", value: "Kerala" },
+    { label: "Madhya Pradesh", value: "Madhya Pradesh" },
+    { label: "Maharashtra", value: "Maharashtra" },
+  ];
   return (
     <>
       <StatusBar barStyle="default" />
       <View style={styles.container}>
-        <Text style={styles.heading}>Welcome!</Text>
-        <View>
-          <Text style={{ textAlign: "center", marginBottom: 20 }}>
-            or signup with
-          </Text>
-          <View style={styles.federatedContainer}>
-            <Pressable style={styles.federated}>
-              <Image
-                source={{
-                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/120px-Google_%22G%22_logo.svg.png?20230822192911",
-                }}
-                width={24}
-                height={24}
-              />
-            </Pressable>
-            <Pressable style={styles.federated}>
-              <AntDesign name="apple1" size={24} color="gray" />
-            </Pressable>
+        <Text style={styles.heading}>Farm Info</Text>
 
-            <Pressable style={styles.federated}>
-              <AntDesign name="facebook-square" size={24} color="blue" />
-            </Pressable>
-          </View>
-        </View>
         <View style={styles.searchSection}>
-          <AntDesign name="lock" size={28} color="#000" />
+          <AntDesign name="tago" size={24} color="black" />
           <TextInput
             style={styles.input}
-            value={name}
-            placeholder="Full Name"
+            value={busienssName}
+            placeholder="Business Name"
             onChangeText={(searchString) => {
-              setName(searchString);
+              setBusinessName(searchString);
             }}
           />
         </View>
         <View style={styles.searchSection}>
-          <Entypo name="email" color={"#000"} size={20} />
+          <AntDesign name="smileo" size={24} color="black" />
           <TextInput
             style={styles.input}
-            placeholder="Email"
-            value={email}
+            placeholder="Informal Name"
+            value={informalName}
             onChangeText={(searchString) => {
-              setEmail(searchString);
+              setInformalName(searchString);
             }}
           />
         </View>
 
         <View style={styles.searchSection}>
-          <AntDesign name="lock" size={28} color="#000" />
+          <AntDesign name="home" size={24} color="black" />
           <TextInput
             style={styles.input}
-            placeholder="Phone Number"
-            value={phone}
+            placeholder="Street Address"
+            value={streetAddress}
             onChangeText={(searchString) => {
-              setPhone(searchString);
+              setStreetAddress(searchString);
+            }}
+          />
+        </View>
+        <View style={styles.searchSection}>
+          <EvilIcons name="location" size={24} color="black" />
+          <TextInput
+            style={styles.input}
+            value={city}
+            placeholder="City"
+            onChangeText={(searchString) => {
+              setCity(searchString);
             }}
           />
         </View>
@@ -87,43 +95,38 @@ function index() {
           <AntDesign name="lock" size={28} color="#000" />
           <TextInput
             style={styles.input}
-            value={password}
-            placeholder="Password"
+            value={pincode}
+            placeholder="Zipcode"
             onChangeText={(searchString) => {
-              setPassword(searchString);
+              setPincode(searchString);
             }}
           />
         </View>
-        <View style={styles.searchSection}>
-          <AntDesign name="lock" size={28} color="#000" />
-          <TextInput
-            style={styles.input}
-            value={confirmPassword}
-            placeholder="Confirm assword"
-            onChangeText={(searchString) => {
-              setConfirmPassword(searchString);
-            }}
-          />
-        </View>
+        <RNPickerSelect
+          placeholder={{ label: "Select State", value: "Select State" }}
+          style={{
+            inputAndroid: {
+              color: "black",
+              backgroundColor: "#F2F2F2",
+              padding: 10,
+              borderRadius: 10,
+            },
+          }}
+          value={state}
+          onValueChange={(value) => setState(value)}
+          items={states}
+        />
+
         <View style={styles.actionWrapper}>
           <Pressable
             onPress={() => {
-              console.log(email, password);
-              router.push("/login/");
+              router.push("/signup/");
             }}
           >
-            <Text
-              style={{
-                textDecorationLine: "underline",
-                fontSize: 18,
-                fontWeight: "500",
-              }}
-            >
-              Login
-            </Text>
+            <AntDesign name="arrowleft" size={24} color="black" />
           </Pressable>
           <Pressable
-            onPress={() => router.push("/signup/farm-info")}
+            onPress={() => router.push("/signup/verification")}
             style={styles.loginbutton}
           >
             <Text
@@ -152,7 +155,6 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 30,
     fontWeight: "bold",
-    marginVertical: 20,
   },
   createWrapper: {
     display: "flex",
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F2F2",
     borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingVertical: 5,
     gap: 10,
   },
   input: {
@@ -206,4 +208,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
-export default index;
+export default FarmInfo;
