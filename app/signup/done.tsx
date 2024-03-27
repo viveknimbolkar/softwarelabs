@@ -1,7 +1,7 @@
 import { View } from "@/components/Themed";
 import { AntDesign } from "@expo/vector-icons";
 import { registerRootComponent } from "expo";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import CheckImage from "../../assets/images/check.png";
 import React, { useState } from "react";
@@ -16,12 +16,6 @@ import {
 } from "react-native";
 
 function index() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   return (
     <>
       <StatusBar barStyle="default" />

@@ -1,7 +1,7 @@
 import { View } from "@/components/Themed";
 import { AntDesign } from "@expo/vector-icons";
 import { registerRootComponent } from "expo";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
@@ -13,8 +13,50 @@ import {
   StatusBar,
   Dimensions,
 } from "react-native";
+import axios from "axios";
 
 function index() {
+  const params = useLocalSearchParams();
+  console.log(params);
+
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post(
+        "https://sowlab.com/assignment/user/register",
+        {
+          full_name: params.fullName,
+          email: params.email,
+          password: params.password,
+          phone: params.phone,
+          role: "farmer",
+          device_token: "0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
+          type: "email/facebook/google/apple",
+          social_id: "0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
+          business_name: params.businessName,
+          informal_name: params.informalName,
+          address: params.streetAddress,
+          city: params.city,
+          state: params.state,
+          zip_code: params.pincode,
+          registration_proof: "https://example.com/proof.jpg",
+          business_hours: {
+            mon: ["8:00am - 10:00am", "10:00am - 1:00pm"],
+            tue: ["8:00am - 10:00am", "10:00am - 1:00pm"],
+            wed: ["8:00am - 10:00am", "10:00am - 1:00pm", "1:00pm - 4:00pm"],
+            thu: ["8:00am - 10:00am", "10:00am - 1:00pm", "1:00pm - 4:00pm"],
+            fri: ["8:00am - 10:00am", "10:00am - 1:00pm"],
+            sat: ["8:00am - 10:00am", "10:00am - 1:00pm"],
+            sun: ["8:00am -10:00am"],
+          },
+        }
+      );
+      console.log(response.data);
+
+      console.log(response.data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
   return (
     <>
       <StatusBar barStyle="default" />
@@ -45,7 +87,16 @@ function index() {
           </Pressable>
 
           <Pressable
-            onPress={() => router.push("/signup/business-hours")}
+            onPress={() => {
+              handleSignup();
+              router.push({
+                pathname: "/signup/business-hours",
+                params: {
+                  ...params,
+                  registrationProof: "https://example.com/proof.jpg",
+                },
+              });
+            }}
             style={styles.loginbutton}
           >
             <Text
@@ -54,7 +105,7 @@ function index() {
                 color: "#fff",
               }}
             >
-              Continue
+              Submit
             </Text>
           </Pressable>
         </View>

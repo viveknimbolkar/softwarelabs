@@ -13,11 +13,30 @@ import {
   StatusBar,
   Dimensions,
 } from "react-native";
+import axios from "axios";
 
 function index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "https://sowlab.com/assignment/user/login",
+        {
+          email: email,
+          password: password,
+          role: "farmer",
+          device_token: "0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
+          type: "email/facebook/google/apple",
+          social_id: "0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx",
+        }
+      );
+      console.log(response.data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
   return (
     <>
       <StatusBar barStyle="default" />
@@ -73,7 +92,7 @@ function index() {
         <Pressable
           style={styles.loginbutton}
           onPress={() => {
-            console.log(email, password);
+            handleLogin();
           }}
         >
           <Text style={{ color: "#ffffff", fontSize: 18, fontWeight: "500" }}>

@@ -1,7 +1,7 @@
 import { View } from "@/components/Themed";
 import { AntDesign } from "@expo/vector-icons";
 import { registerRootComponent } from "expo";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
   Pressable,
@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Weekdays from "@/components/Weekdays";
 
-const timeSlots = [
+const timeSlotsData = [
   {
     from: "8:00AM",
     to: "12:00PM",
@@ -38,7 +38,8 @@ const timeSlots = [
 
 function index() {
   const [day, setDay] = useState<string>("");
-
+  const [timeSlots, setTimeSlots] = useState<any>(""); // [ { from: "8:00AM", to: "12:00PM" }
+  const params = useLocalSearchParams();
   return (
     <>
       <StatusBar barStyle="default" />
@@ -53,7 +54,7 @@ function index() {
         <View>
           <Weekdays day={day} setDay={(e) => setDay(e)} />
           <View style={styles.timeWrapper}>
-            {timeSlots.map((item, i) => {
+            {timeSlotsData.map((item: any, i: number) => {
               return (
                 <Pressable
                   onPress={() => setDay(item.from)}
@@ -93,7 +94,18 @@ function index() {
             <AntDesign name="arrowleft" size={24} color="black" />
           </Pressable>
           <Pressable
-            onPress={() => router.push("/signup/done")}
+            onPress={() =>
+              router.push({
+                pathname: "/signup/done",
+                params: {
+                  ...params,
+                  businessHours: {
+                    day: day,
+                    timeSlots: timeSlots,
+                  },
+                },
+              })
+            }
             style={styles.loginbutton}
           >
             <Text

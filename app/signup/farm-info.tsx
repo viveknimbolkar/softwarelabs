@@ -1,7 +1,7 @@
 import { View } from "@/components/Themed";
 import { AntDesign } from "@expo/vector-icons";
 import { registerRootComponent } from "expo";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
 import { EvilIcons } from "@expo/vector-icons";
@@ -17,6 +17,9 @@ import {
 } from "react-native";
 
 function FarmInfo() {
+  const params = useLocalSearchParams();
+  console.log(params);
+
   const [busienssName, setBusinessName] = useState("");
   const [informalName, setInformalName] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
@@ -126,7 +129,20 @@ function FarmInfo() {
             <AntDesign name="arrowleft" size={24} color="black" />
           </Pressable>
           <Pressable
-            onPress={() => router.push("/signup/verification")}
+            onPress={() =>
+              router.push({
+                pathname: "/signup/verification",
+                params: {
+                  ...params,
+                  busienssName,
+                  informalName,
+                  streetAddress,
+                  city,
+                  state,
+                  pincode,
+                },
+              })
+            }
             style={styles.loginbutton}
           >
             <Text

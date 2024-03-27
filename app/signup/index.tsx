@@ -123,7 +123,12 @@ function index() {
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => router.push("/signup/farm-info")}
+            onPress={() =>
+              router.push({
+                pathname: "/signup/farm-info",
+                params: { email, password, name, phone, confirmPassword },
+              })
+            }
             style={styles.loginbutton}
           >
             <Text
